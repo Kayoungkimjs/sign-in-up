@@ -4,13 +4,16 @@ import './index.css'
 import { Global, ThemeProvider } from '@emotion/react'
 import { GlobalStyles } from './globalStyle.ts'
 import { theme } from './styles/index.ts'
-import Route from './Route.tsx'
+import App from './App.tsx'
+import { RecoilRoot } from 'recoil'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Global styles={GlobalStyles} />
-      <Route />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <Global styles={GlobalStyles} />
+        <App />
+      </ThemeProvider>
+    </RecoilRoot>
   </React.StrictMode>
 )
