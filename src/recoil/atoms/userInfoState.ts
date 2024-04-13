@@ -16,6 +16,5 @@ export const userInfoState = atom({
     cardNumber2: '',
     cardNumber3: '',
     cardNumber4: '',
-    cardNumber: '',
   },
 })

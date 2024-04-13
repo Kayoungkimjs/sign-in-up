@@ -8,14 +8,15 @@ export const errorState = atom({
     confirmPassword: '',
     name: '',
     contact: '',
-    address: '',
-    detailedAddress: '',
-    zonecode: '',
-    extraAddress: '',
+  },
+})
+
+export const cardErrorState = atom({
+  key: 'cardErrorState',
+  default: {
     cardNumber1: '',
     cardNumber2: '',
     cardNumber3: '',
     cardNumber4: '',
-    cardNumber: '',
   },
 })
