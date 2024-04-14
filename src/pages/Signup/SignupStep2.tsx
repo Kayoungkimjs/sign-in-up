@@ -5,8 +5,10 @@ import DaumPostcode from 'react-daum-postcode'
 import { useRecoilState } from 'recoil'
 import { userInfoState } from '../../recoil/atoms/userInfoState'
 import useErrorMessage from '../../hooks/useErrorMessage'
+import { Input } from '../../components/Input'
+import { ErrorMessage } from '../../components/ErrorInfo'
 
-interface Data {
+interface AddressDataType {
   address: string
   zonecode: string
 }
@@ -17,20 +19,11 @@ interface Props {
 }
 
 const SignupStep2 = ({ onNextPage, onPrevPage }: Props) => {
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState)
-  console.log('userInfo', userInfo)
   const { errorInfo, validateInput } = useErrorMessage()
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState)
   const [isOpen, setIsOpen] = useState(false)
 
-  const closeHandler = (state: string) => {
-    if (state === 'FORCE_CLOSE') {
-      setIsOpen(false)
-    } else if (state === 'COMPLETE_CLOSE') {
-      setIsOpen(false)
-    }
-  }
-
-  const completeHandler = (data: Data) => {
+  const handleComplete = (data: AddressDataType) => {
     const { address, zonecode } = data
     setUserInfo({ ...userInfo, address, zonecode })
   }
@@ -41,17 +34,13 @@ const SignupStep2 = ({ onNextPage, onPrevPage }: Props) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-
     validateInput(name, value)
-
-    // userInfo 업데이트
     setUserInfo({ ...userInfo, [name]: value })
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (errorInfo.name || errorInfo.contact) {
-      // 유효성 검사에 실패한 경우
       return
     }
     onNextPage()
@@ -59,88 +48,80 @@ const SignupStep2 = ({ onNextPage, onPrevPage }: Props) => {
 
   return (
     <SignupContainer>
-      <h3>2. 배송지 정보 입력</h3>
+      <h1>2. 배송지 정보 입력</h1>
       <SignupDetail>
         <form onSubmit={handleSubmit}>
-          <div className="detail">
+          <div className="formItem">
             <label htmlFor="name">이름</label>
-            <input
-              type="text"
+            <Input
               id="name"
               name="name"
               onChange={handleChange}
               value={userInfo.name}
-              required
             />
           </div>
-          <small className="warning"> {errorInfo.name}</small>
-          <div className="detail">
+          {errorInfo.name && <ErrorMessage error={errorInfo.name} />}
+          <div className="formItem">
             <label htmlFor="contact">연락처</label>
-            <input
-              type="text"
+            <Input
               id="contact"
               name="contact"
               onChange={handleChange}
               value={userInfo.contact}
-              required
             />
           </div>
-          <small className="warning"> {errorInfo.contact}</small>
-          <div className="detail">
+          {errorInfo.contact && <ErrorMessage error={errorInfo.contact} />}
+          <div className="formItem">
             <label htmlFor="address">주소</label>
             <div className="zonecode">
-              <input
-                type="string"
+              <Input
                 id="address"
                 name="address"
                 value={userInfo.zonecode}
                 placeholder="우편번호"
                 onChange={handleChange}
-                required
                 readOnly
               />
-              <Button children="주소 찾기" onClick={toggleHandler} />
+              <Button
+                className="findButtton"
+                children="검색"
+                onClick={toggleHandler}
+              />
             </div>
           </div>
           <div className="address">
-            <input
-              type="string"
+            <Input
               id="address"
               name="address"
               value={userInfo.address}
               placeholder="주소"
               onChange={handleChange}
-              required
               readOnly
             />
           </div>
-          <div className="address-detail">
-            <input
-              type="string"
+          <div className="addressDetail">
+            <Input
               id="detailedAddress"
               name="detailedAddress"
               placeholder="상세주소"
               value={userInfo.detailedAddress}
               onChange={handleChange}
             />
-            <input
-              type="string"
+            <Input
               id="extraAddress"
               name="extraAddress"
-              placeholder="참고항목"
+              placeholder="요청사항"
               value={userInfo.extraAddress}
               onChange={handleChange}
+              required={false}
             />
           </div>
           {isOpen && (
             <div className="postcode">
-              <DaumPostcode
-                onComplete={completeHandler}
-                onClose={closeHandler}
-              />
+              <DaumPostcode onComplete={handleComplete} />
             </div>
           )}
-          <div className="button-group">
+          <div className="buttonGroup">
             <Button type="submit" onClick={onPrevPage} children={'이전'} />
             <Button
               type="submit"
@@ -150,7 +131,9 @@ const SignupStep2 = ({ onNextPage, onPrevPage }: Props) => {
                 !userInfo.contact ||
                 !userInfo.address
               }
-              onClick={() => handleSubmit}
+              onClick={() => {
+                handleSubmit
+              }}
               children={'다음'}
             />
           </div>

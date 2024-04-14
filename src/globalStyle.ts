@@ -63,6 +63,10 @@ export const GlobalStyles = css`
     list-style: none;
   }
 
+  address {
+    font-style: normal;
+  }
+
   .visuallyHidden {
     ${visuallyHidden()}
   }
