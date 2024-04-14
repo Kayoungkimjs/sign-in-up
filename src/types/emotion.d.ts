@@ -4,22 +4,10 @@ declare module '@emotion/react' {
   export type TypographyScale = 'xxs' | 'xs' | 'sm' | 'base' | 'md' | 'lg'
 
   export interface DefaultTheme {
-    boxShadows: {
-      dropdown: string
-      popup: string
-      popupReversed: string
-    }
-
     breakpoints: {
       tablet: string
       desktop: string
     }
-
-    levels: {
-      [key: string]: number
-    }
-
-    gutter: string
 
     colors: {
       black: string
