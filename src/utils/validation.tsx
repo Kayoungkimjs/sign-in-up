@@ -16,12 +16,21 @@ export const validateContact = (contact: string): boolean => {
   return /^0\d{2}[ -]?\d{3,4}[ -]?\d{4}$/.test(contact)
 }
 
-export const validateCardNumber = (cardNumber: string): boolean => {
+export const validateInputNumber = (card: string): boolean => {
+  return /^\d{4}$/.test(card)
+}
+
+export const validateCardNumber = (...cardNumbers: string[]): boolean => {
+  const fullCardNumber = cardNumbers.join('')
+  const isValidLength = /^\d{16}$/.test(fullCardNumber)
+
+  if (!isValidLength) return false
+
   let sum = 0
   let double = false
 
-  for (let i = cardNumber.length - 1; i >= 0; i--) {
-    let digit = parseInt(cardNumber.charAt(i), 10)
+  for (let i = fullCardNumber.length - 1; i >= 0; i--) {
+    let digit = parseInt(fullCardNumber.charAt(i), 10)
 
     if (double) {
       digit *= 2
