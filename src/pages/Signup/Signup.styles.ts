@@ -87,6 +87,7 @@ export const SignupDetail = styled.div`
       label {
         font-size: ${theme.fontSizes.base};
         margin-right: 10px;
+        margin-bottom: 5px;
       }
 
       ${media[0]} {
@@ -117,6 +118,7 @@ export const SignupDetail = styled.div`
 
   .postcode {
     ${positionCenter()}
+    z-index: 500;
   }
 
   .zonecode {
@@ -148,6 +150,7 @@ export const SignupDetail = styled.div`
   .cardNumberGroup {
     ${flexbox()}
     width: 100%;
+    padding-bottom: 5px;
 
     input {
       width: 25%;
