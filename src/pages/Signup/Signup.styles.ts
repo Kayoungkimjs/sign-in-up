@@ -2,27 +2,125 @@ import styled from '@emotion/styled'
 import { positionCenter } from '../../styles/utils/position'
 import { columnFlexbox, flexbox } from '../../styles/utils/flexbox'
 import { theme } from '../../styles'
-import { textStyle } from '../../styles/utils/typography'
+import { media } from '../../styles/utils/media'
 
 export const SignupContainer = styled.div`
   ${positionCenter()}
+  width: 530px;
   padding: 64px;
-  width: 622px;
-  height: 430px;
   border: 1px solid black;
+
+  h1 {
+    font-size: ${theme.fontSizes.md};
+  }
+
+  ${media[0]} {
+    padding: 24px;
+    width: calc(100% - 25px);
+
+    h1 {
+      font-size: ${theme.fontSizes.base};
+    }
+  }
+
+  .signupResult {
+    h3 {
+      font-size: ${theme.fontSizes.lg};
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: ${theme.fontSizes.md};
+      margin-bottom: 8px;
+    }
+
+    .signupResultDetail {
+      div {
+        ${flexbox('start')};
+        font-size: ${theme.fontSizes.base};
+
+        &:not(:last-child) {
+          margin-bottom: 8px;
+        }
+
+        dt {
+          font-weight: 700;
+
+          ::after {
+            margin: 0 2px;
+            content: ':';
+          }
+        }
+      }
+    }
+
+    ${media[0]} {
+      h3 {
+        font-size: ${theme.fontSizes.md};
+      }
+
+      p {
+        font-size: ${theme.fontSizes.sm};
+      }
+
+      .signupResultDetail {
+        div {
+          font-size: ${theme.fontSizes.xs};
+        }
+      }
+    }
+  }
 `
 
 export const SignupDetail = styled.div`
   ${columnFlexbox('start')}
   width: 100%;
-  margin-top: 43px;
+  margin-top: 35px;
+
+  form {
+    width: 100%;
+
+    .formItem {
+      ${flexbox('between')}
+      padding-bottom: 10px;
+
+      label {
+        font-size: ${theme.fontSizes.base};
+        margin-right: 10px;
+      }
+
+      ${media[0]} {
+        ${columnFlexbox('start', 'start')}
+
+        label {
+          font-size: ${theme.fontSizes.sm};
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .buttonGroup {
+    ${flexbox('end')};
+    margin-top: 20px;
+
+    button {
+      &:first-of-type {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .nextButton {
+    text-align: right;
+  }
 
   .postcode {
     ${positionCenter()}
   }
 
   .zonecode {
-    ${flexbox()};
+    ${flexbox()}
 
     input {
       margin-right: 10px;
@@ -36,87 +134,36 @@ export const SignupDetail = styled.div`
     }
   }
 
-  .address-detail {
+  .addressDetail {
     ${flexbox('end')};
 
     input {
-      &:first-child {
+      &:first-of-type {
         width: 100%;
         margin-right: 10px;
       }
     }
   }
 
-  .next-button {
-    text-align: right;
-  }
+  .cardNumberGroup {
+    ${flexbox()}
+    width: 100%;
 
-  .button-group {
-    ${flexbox('end')};
-    margin-top: 20px;
+    input {
+      width: 25%;
 
-    button {
-      &:first-child {
-        margin-right: 10px;
+      &:not(:last-child) {
+        margin-right: 8px;
       }
     }
   }
 
-  .card-number-group {
-    ${flexbox('between')}
+  .testNumber {
     margin-top: 20px;
+    font-size: ${theme.fontSizes.sm};
 
-    input {
-      width: 100px;
+    strong {
+      margin-bottom: 10px;
     }
-  }
-
-  input {
-    ${textStyle('base')};
-    display: block;
-    width: 200px;
-    padding: 0 8px;
-    background-color: ${theme.colors.white};
-    border: 1px solid ${theme.colors.border};
-    border-radius: 4px;
-    color: ${theme.colors.black};
-    transition: background-color 200ms ease-in-out,
-      border-color 200ms ease-in-out;
-    appearance: none;
-
-    &::placeholder {
-      color: ${theme.colors.tertiary};
-    }
-
-    &:focus {
-      border: 2px solid ${theme.colors.blueDark};
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.4;
-    }
-  }
-
-  form {
-    width: 100%;
-  }
-
-  .detail {
-    ${flexbox('between')}
-    padding-bottom: 10px;
-  }
-
-  .warning {
-    ${flexbox('end')}
-    color: ${theme.colors.red};
-
-    &:not(:last-child) {
-      margin-bottom: 5px;
-    }
-  }
-
-  .result {
-    ${flexbox()}
   }
 `
